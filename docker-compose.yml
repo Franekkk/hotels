@@ -1,0 +1,88 @@
+version: '3.4'
+services:
+  web:
+    build:
+      context: docker/web
+      network: host
+    ports:
+    - ${WEB_PORT}:8080
+    volumes:
+    - ./web:/src
+    working_dir: /src
+    command: "webpack --watch"
+    tty: true
+    depends_on:
+    - reservation
+    networks:
+    - hotel
+  reservation:
+    build: docker/python
+    image: hotel/python
+    ports:
+    - ${RESERVATION_PORT}:8080
+    volumes:
+    - ./reservation:/srv/app
+    environment:
+    - DATABASE_HOST=${DB_HOST}
+    - DATABASE_NAME=${DB_NAME}
+    - DATABASE_USER=${DB_USER}
+    - DATABASE_PASSWORD=${DB_PASSWORD}
+    working_dir: /srv/app
+    depends_on:
+    - queue
+    - hotel
+    - db
+    networks:
+    - hotel
+  worker:
+    build: docker/python
+    image: hotel/python
+    ports:
+    - ${WORKER_PORT}:8080
+    volumes:
+    - ./worker:/srv/app
+    working_dir: /srv/app
+    depends_on:
+    - queue
+    - hotel
+    networks:
+    - hotel
+  queue:
+    image: rabbitmq:latest
+    ports:
+    - ${QUEUE_PORT}:5672
+    - ${QUEUE_GUI_PORT}:15672
+    networks:
+    - hotel
+  hotel:
+    build: docker/python
+    image: hotel/python
+    ports:
+    - ${HOTEL_PORT}:8080
+    volumes:
+    - ./hotel:/srv/app
+    environment:
+    - DATABASE_HOST=${DB_HOST}
+    - DATABASE_NAME=${DB_NAME}
+    - DATABASE_USER=${DB_USER}
+    - DATABASE_PASSWORD=${DB_PASSWORD}
+    working_dir: /srv/app
+    depends_on:
+    - db
+    networks:
+    - hotel
+  db:
+    image: mysql:5.7.23
+    volumes:
+    - hotel_db_data:/var/lib/mysql
+    environment:
+    - MYSQL_HOST=${DB_HOST}
+    - MYSQL_NAME=${DB_NAME}
+    - MYSQL_USER=${DB_USER}
+    - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+    - hotel
+networks:
+  hotel:
+volumes:
+  hotel_db_data:
