@@ -48,10 +48,13 @@ services:
     networks:
     - hotel
   queue:
-    image: rabbitmq:latest
+    image: rabbitmq:3.7.4-management-alpine
     ports:
     - ${QUEUE_PORT}:5672
     - ${QUEUE_GUI_PORT}:15672
+    environment:
+    - RABBITMQ_DEFAULT_USER=${QUEUE_USER}
+    - RABBITMQ_DEFAULT_PASS=${QUEUE_PASS}
     networks:
     - hotel
   hotel:
