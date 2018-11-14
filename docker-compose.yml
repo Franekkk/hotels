@@ -66,8 +66,8 @@ services:
     - ./hotel:/srv/app
     environment:
     - DATABASE_HOST=${DB_HOST}
-    - DATABASE_NAME=${DB_NAME}
-    - DATABASE_USER=${DB_USER}
+    - DATABASE_NAME=hotel_krakow
+    - DATABASE_USER=root
     - DATABASE_PASSWORD=${DB_PASSWORD}
     working_dir: /srv/app
     depends_on:

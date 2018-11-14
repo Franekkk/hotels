@@ -1,5 +1,5 @@
 FROM python:3.7.0-alpine
-RUN apk update && apk add mysql-dev build-base
+RUN apk update && apk add mysql-dev build-base mysql-client
 RUN pip install --upgrade pip setuptools pipenv
 
 ENV PROJECT_DIRECTORY=/srv/app
