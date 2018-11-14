@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="css/login.css">
+
+    <title>HotelApp</title>
+    <style>
+        .room {
+            display: flex;
+            flex: 1;
+        }
+
+        .room_content {
+            flex: 1;
+            order: 2;
+        }
+
+        ul.facilities {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .room_photo {
+            width: 200px;
+            order: 1;
+        }
+
+        .room_actions {
+            width: 20%;
+            order: 3;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        HotelApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="search.html">Pokoje <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Logowanie</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div class="loginbox text-center">
+        <form class="form-signin">
+            <img class="mb-4" src="img/logo.png" alt="" width="72" height="72">
+
+            <h1 class="h3 mb-3 font-weight-normal">Zaloguj się</h1>
+
+            <div class="form-group">
+                <label for="username" class="sr-only">Adres e-mail</label>
+                <input type="email" id="username" name="username" class="form-control" placeholder="Email address" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="sr-only">Hasło</label>
+                <input type="password"id="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+        </form>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="bootstrap-material-design-dist/js/bootstrap-material-design.min.js"></script>
+</body>
+</html>

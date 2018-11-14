@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="css/offcanvas.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>HotelApp</title>
+
+    <style>
+        .room {
+            display: flex;
+            flex: 1;
+        }
+        .room_content{
+            flex: 1;
+            order: 2;
+        }
+        ul.facilities {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .room_photo{
+            width: 200px;
+            order: 1;
+        }
+        .room_actions{
+            width: 20%;
+            order: 3;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        HotelApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="search.html">Pokoje <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Logowanie</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <form class="mb-3 mt-3">
+        <div class="form-row">
+            <div class="col form-group">
+                <label for="city">Miasto</label>
+                <select type="text" class="custom-select" id="city">
+                    <option value="1">Kraków</option>
+                    <option value="2">Wrocław</option>
+                    <option value="3">Warszawa</option>
+                </select>
+            </div>
+            <div class="col form-group">
+                <label for="capacity">Liczba osób</label>
+                <input type="number" class="custom-select" id="capacity" name="capacity" min="1" max="5" value="1">
+            </div>
+            <div class="col form-group">
+                <label for="checkin_date">Data zameldowania</label>
+                <input type="date" class="custom-select" id="checkin_date">
+            </div>
+            <div class="col form-group">
+                <label for="nights">Liczba noclegów</label>
+                <input type="number" class="custom-select" id="nights" name="nights" min="1" max="7" value="5">
+            </div>
+            <!--<div class="col form-group">-->
+                <!--<label for="checkout_date">Data wymeldowania</label>-->
+                <!--<input type="date" class="custom-select" id="checkout_date">-->
+            <!--</div>-->
+        </div>
+    </form>
+
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h5 class="border-bottom border-gray pb-2 mb-0">Dostępne pokoje </h5>
+
+        <div class="room row text-muted border-bottom border-gray pb-2 m-1">
+            <main class="room_content p-2 pl-4">
+                <h3>Jakiś pokój trzyosobowy</h3>
+                <h5><i class="fa fa-map-marker"></i> Hotel AAA w Krakowie</h5>
+                <ul class="facilities pt-3">
+                    <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 123 zł / noc</li>
+                    <li><i class="fa fa-bed"></i> 3 łóżka jednoosobowe</li>
+                    <li><i class="fa fa-clock"></i> Dostępny od zaraz</li>
+                </ul>
+            </main>
+            <aside class="room_photo">
+                <img src="img/room1.jpg"
+                     alt="" class="mr-2 rounded" width="200" height="200"
+                >
+            </aside>
+            <aside class="room_actions p-2">
+                <div class="pull-md-right">
+                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                </div>
+            </aside>
+        </div>
+
+        <div class="room row text-muted border-bottom border-gray pb-2 m-1">
+            <main class="room_content p-2 pl-4">
+                <h3>Pokój z balkonem</h3>
+                <h5><i class="fa fa-map-marker"></i> Hotel BBB W Krakowie</h5>
+                <ul class="facilities pt-3">
+                    <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 322 zł / noc</li>
+                    <li><i class="fa fa-bed"></i> 4 łóżka jednoosobowe</li>
+                    <li><i class="fa fa-clock"></i> Dostępny od 25.12.2018</li>
+                </ul>
+            </main>
+            <aside class="room_photo">
+                <img src="img/room2.jpg"
+                     alt="" class="mr-2 rounded" width="200" height="200"
+                >
+            </aside>
+            <aside class="room_actions p-2">
+                <div class="pull-md-right">
+                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                </div>
+            </aside>
+        </div>
+
+        <div class="room row text-muted border-bottom border-gray pb-2 m-1">
+            <main class="room_content p-2 pl-4">
+                <h3>Jednoosobowy pokój z łazienką</h3>
+                <h5><i class="fa fa-map-marker"></i> Hotel ZZZ Kraków</h5>
+                <ul class="facilities pt-3">
+                    <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 222 zł / noc</li>
+                    <li><i class="fa fa-bed"></i> 1 łóżko jednoosobowe</li>
+                    <li><i class="fa fa-clock"></i> Dostępny od zaraz</li>
+                </ul>
+            </main>
+            <aside class="room_photo">
+                <img src="img/room3.jpg"
+                     alt="" class="mr-2 rounded" width="200" height="200"
+                >
+            </aside>
+            <aside class="room_actions p-2">
+                <div class="pull-md-right">
+                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="bootstrap-material-design-dist/js/bootstrap-material-design.min.js"></script>
+</body>
+</html>

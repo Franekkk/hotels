@@ -1,18 +1,14 @@
 version: '3.4'
 services:
-  web:
+  assets:
     build:
-      context: docker/web
+      context: docker/assets
       network: host
-    ports:
-    - ${WEB_PORT}:8080
     volumes:
-    - ./web:/src
-    working_dir: /src
-    command: "webpack --watch"
+    - ./web/assets:/assets
+    working_dir: /assets/src
+    command: "/docker-entrypoint.sh webpack --watch"
     tty: true
-    depends_on:
-    - reservation
     networks:
     - hotel
   reservation:

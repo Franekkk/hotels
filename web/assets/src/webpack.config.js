@@ -4,18 +4,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production',
-
-    entry: ['./js/app.js'],
-
+    entry: ['./js/index.js'],
     output: {
-        path: path.resolve(__dirname, '../target/classes/public/js/'),
+        path: path.resolve(__dirname, '../public/js/'),
         filename: 'bundle.js',
     },
-
     resolve: {
         modules: ['node_modules']
     },
-
     module: {
         rules: [
             {
@@ -40,4 +36,4 @@ module.exports = {
             {from: './img/*', to: '../'}
         ])
     ]
-}
+};

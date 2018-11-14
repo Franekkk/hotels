@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="css/offcanvas.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>HotelApp</title>
+    <style>
+        .room {
+            display: flex;
+            flex: 1;
+        }
+
+        .room_content {
+            flex: 1;
+            order: 2;
+        }
+
+        ul.facilities {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .room_photo {
+            width: 200px;
+            order: 1;
+        }
+
+        .room_actions {
+            width: 20%;
+            order: 3;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light container">
+    <a class="navbar-brand" href="#">
+        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        HotelApp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="search.html">Pokoje <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">Logowanie</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Szukaj">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h2>Identyfikator rezerwacji: gI46AdIM1gEaLY</h2>
+    </div>
+    <form class="needs-validation" novalidate>
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="room row text-muted pb-2 m-1">
+                        <main class="room_content p-2 pl-4">
+                            <h3>Jakiś pokój trzyosobowy</h3>
+                            <h5><i class="fa fa-map-marker"></i> Hotel AAA w Krakowie</h5>
+                            <ul class="facilities pt-3">
+                                <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 123 zł / noc</li>
+                                <li><i class="fa fa-bed"></i> 3 łóżka jednoosobowe</li>
+                                <li><i class="fa fa-clock"></i> Dostępny od zaraz</li>
+                            </ul>
+                        </main>
+                        <aside class="room_photo">
+                            <img src="img/room1.jpg"
+                                 alt="" class="mr-2 rounded" width="200" height="200"
+                            >
+                        </aside>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5>Rezerwacja na</h5>
+                    Piotr Rozmarynowski<br>
+                    piotr@venstudio.pl<br>
+                    Liczba osób: 2<br>
+                    Zameldowanie: 15.12.2018 15:30<br>
+                    Noclegów: 2<br>
+                    Uwagi: -brak-<br>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h5>Status rezerwacji</h5>
+                    <i class="fa fa-check fa-10x text-success"></i>
+                    Zatwierdzona<br>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+<script src="bootstrap-material-design-dist/js/bootstrap-material-design.min.js"></script>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+</script>
+</body>
+</html>
