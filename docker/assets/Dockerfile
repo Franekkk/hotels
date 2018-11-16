@@ -5,3 +5,4 @@ RUN npm install -g yarn  \
     && yarn global add webpack-dev-server webpack-cli webpack
 
 COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]

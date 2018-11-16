@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,8 +6,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
-    <link rel="stylesheet" href="css/offcanvas.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-material-design.css' %}">
+    <link rel="stylesheet" href="{% static 'css/offcanvas.css' %}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>HotelApp</title>
 
@@ -37,8 +38,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light container">
-    <a class="navbar-brand" href="#">
-        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <a class="navbar-brand" href="/">
+        <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
         HotelApp
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +49,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="search.html">Pokoje <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Pokoje <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="login.html">Logowanie</a>
+                <a class="nav-link" href="/login">Logowanie</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -106,13 +107,13 @@
                 </ul>
             </main>
             <aside class="room_photo">
-                <img src="img/room1.jpg"
+                <img src="{% static 'img/room1.jpg' %}"
                      alt="" class="mr-2 rounded" width="200" height="200"
                 >
             </aside>
             <aside class="room_actions p-2">
                 <div class="pull-md-right">
-                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                    <a href="/book/5" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
                 </div>
             </aside>
         </div>
@@ -128,13 +129,13 @@
                 </ul>
             </main>
             <aside class="room_photo">
-                <img src="img/room2.jpg"
+                <img src="{% static 'img/room2.jpg' %}"
                      alt="" class="mr-2 rounded" width="200" height="200"
                 >
             </aside>
             <aside class="room_actions p-2">
                 <div class="pull-md-right">
-                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                    <a href="/book/5" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
                 </div>
             </aside>
         </div>
@@ -150,13 +151,13 @@
                 </ul>
             </main>
             <aside class="room_photo">
-                <img src="img/room3.jpg"
+                <img src="{% static 'img/room3.jpg' %}"
                      alt="" class="mr-2 rounded" width="200" height="200"
                 >
             </aside>
             <aside class="room_actions p-2">
                 <div class="pull-md-right">
-                    <a href="book.html" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
+                    <a href="/book/5" class="btn btn-success btn-outline-success">Zarezerwuj nocleg</a>
                 </div>
             </aside>
         </div>
@@ -165,7 +166,7 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-<script src="bootstrap-material-design-dist/js/bootstrap-material-design.min.js"></script>
-<script src="js/bundle.js"></script>
+<script src="{% static 'js/bootstrap-material-design.min.js' %}"></script>
+<!--<script src="{% static 'js/bundle.js' %}"></script>-->
 </body>
 </html>

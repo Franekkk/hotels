@@ -6,7 +6,7 @@ module.exports = {
     mode: 'production',
     entry: ['./js/index.js'],
     output: {
-        path: path.resolve(__dirname, '../public/js/'),
+        path: path.resolve(__dirname, '../front/static/js/'),
         filename: 'bundle.js',
     },
     resolve: {
