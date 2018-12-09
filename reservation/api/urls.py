@@ -14,4 +14,6 @@ urlpatterns = [
     path('reservation/<int:id>', views.reservation, name='reservation'),
     # /api/reservation/5/status
     path('reservation/<int:id>/status', views.reservation_status, name='reservation_status'),
+    # /api/users/me
+    path('users/me', views.user_logged_in, name='user_logged_in'),
 ]

@@ -11,6 +11,7 @@ django-rest-swagger = "*"
 django-filter = "*"
 mysqlclient = "*"
 django-extensions = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

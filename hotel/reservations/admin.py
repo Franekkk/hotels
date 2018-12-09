@@ -23,5 +23,5 @@ class RoomTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'photo', 'capacity')
 
     def capacity(self, obj):
-        return f'<img src="{obj.photo.url}"/>'
+        return f'<img src="{obj.photo.domain}"/>'
     capacity.allow_tags = True
