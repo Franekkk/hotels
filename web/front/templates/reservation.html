@@ -69,49 +69,47 @@
     <div class="py-5 text-center">
         <h2>Identyfikator rezerwacji: {{ reservation_id }}</h2>
     </div>
-    <form class="needs-validation" novalidate>
-        <div class="my-3 p-3 bg-white rounded box-shadow">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="room row text-muted pb-2 m-1">
-                        <main class="room_content p-2 pl-4">
-                            <h3>Jakiś pokój trzyosobowy</h3>
-                            <h5><i class="fa fa-map-marker"></i> Hotel AAA w Krakowie</h5>
-                            <ul class="facilities pt-3">
-                                <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 123 zł / noc</li>
-                                <li><i class="fa fa-bed"></i> 3 łóżka jednoosobowe</li>
-                                <li><i class="fa fa-clock"></i> Dostępny od zaraz</li>
-                            </ul>
-                        </main>
-                        <aside class="room_photo">
-                            <img src="{% static 'img/room1.jpg' %}"
-                                 alt="" class="mr-2 rounded" width="200" height="200"
-                            >
-                        </aside>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <h5>Rezerwacja na</h5>
-                    Piotr Rozmarynowski<br>
-                    piotr@venstudio.pl<br>
-                    Liczba osób: 2<br>
-                    Zameldowanie: 15.12.2018 15:30<br>
-                    Noclegów: 2<br>
-                    Uwagi: -brak-<br>
-                </div>
-                <div class="col-md-3 text-center">
-                    <h5>Status rezerwacji</h5>
-                    {% if not status %}
-                        <i class="fa fa-sync-alt fa-spin fa-8x text-primary"></i><br><br>
-                        Oczekuje na weryfikację<br>
-                    {% else %}
-                        <i class="fa fa-10x fa-check text-success"></i>
-                        Zatwierdzona<br>
-                    {% endif %}
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="room row text-muted pb-2 m-1">
+                    <main class="room_content p-2 pl-4">
+                        <h3>Jakiś pokój trzyosobowy</h3>
+                        <h5><i class="fa fa-map-marker"></i> Hotel AAA w Krakowie</h5>
+                        <ul class="facilities pt-3">
+                            <li class="text-success"><i class="fa fa-money-bill-alt"></i> Cena: 123 zł / noc</li>
+                            <li><i class="fa fa-bed"></i> 3 łóżka jednoosobowe</li>
+                            <li><i class="fa fa-clock"></i> Dostępny od zaraz</li>
+                        </ul>
+                    </main>
+                    <aside class="room_photo">
+                        <img src="{% static 'img/room1.jpg' %}"
+                             alt="" class="mr-2 rounded" width="200" height="200"
+                        >
+                    </aside>
                 </div>
             </div>
+            <div class="col-md-3">
+                <h5>Rezerwacja na</h5>
+                Piotr Rozmarynowski<br>
+                piotr@venstudio.pl<br>
+                Liczba osób: 2<br>
+                Zameldowanie: 15.12.2018 15:30<br>
+                Noclegów: 2<br>
+                Uwagi: -brak-<br>
+            </div>
+            <div class="col-md-3 text-center">
+                <h5>Status rezerwacji</h5>
+                {% if not status %}
+                    <i class="fa fa-sync-alt fa-spin fa-8x text-primary"></i><br><br>
+                    Oczekuje na weryfikację<br>
+                {% else %}
+                    <i class="fa fa-10x fa-check text-success"></i>
+                    Zatwierdzona<br>
+                {% endif %}
+            </div>
         </div>
-    </form>
+    </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

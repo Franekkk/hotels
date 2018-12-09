@@ -1,5 +1,6 @@
 import React from 'react';
 import RoomAPI from "../../api/RoomAPI";
+import ReservationAPI from "../../api/ReservationAPI";
 import update from 'immutability-helper';
 
 export default class Room extends React.Component {
@@ -17,7 +18,7 @@ export default class Room extends React.Component {
                 firstName: null,
                 lastName: null,
                 email: null,
-                capacity: null,
+                persons: null,
                 checkinDate: null,
                 checkinTime: null,
                 duration: null,
@@ -65,7 +66,11 @@ export default class Room extends React.Component {
             body: JSON.stringify(data),
         })
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => {
+            if (result.id) {
+                this.props.history.push(`/reservation/${result.id}`);
+            }
+        })
     }
 
     render() {
@@ -110,7 +115,7 @@ export default class Room extends React.Component {
                                 <div className="col-md-6">
                                     <div className="row">
                                         <div className="col-md-4 mb-3">
-                                            <label htmlFor="capacity">Imię:</label>
+                                            <label htmlFor="firstName">Imię:</label>
                                             <input type="text" className="form-control" id="firstName" placeholder="" required
                                                 onChange={this.handleChange}
                                                 value={this.state.form.firstName}
@@ -119,77 +124,77 @@ export default class Room extends React.Component {
                                                 Wpisz poprawne imię.
                                             </div>
                                         </div>
-                                        {/*<div className="col-md-4 mb-3">*/}
-                                            {/*<label htmlFor="capacity">Nazwisko:</label>*/}
-                                            {/*<input type="text" className="form-control" id="lastName" placeholder="" required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.lastName}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Wpisz poprawne nazwisko.*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="col-md-4 mb-3">*/}
-                                            {/*<label htmlFor="capacity">Email:</label>*/}
-                                            {/*<input type="email" className="form-control" id="email" placeholder="" required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.email}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Wpisz poprawny adres email.*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="row">*/}
-                                        {/*<div className="col-md-2 mb-2">*/}
-                                            {/*<label htmlFor="capacity">Osób:</label>*/}
-                                            {/*<input type="number" className="form-control" id="capacity" placeholder="2 os." min="1" max="3" required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.capacity}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Podaj poprawną ilość osób*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="col-md-4 mb-4">*/}
-                                            {/*<label htmlFor="checkin_date">Zameldowanie</label>*/}
-                                            {/*<input type="date" className="form-control" id="checkinDate" min={today.toISOString().substring(0,10)} required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.checkinDate}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Wpisz poprawną datę.*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="col-md-3 mb-3">*/}
-                                            {/*<label htmlFor="checkin_time">Godzina</label>*/}
-                                            {/*<input type="time" className="form-control" id="checkinTime" required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.checkinTime}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Wpisz poprawną godzinę.*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="col-md-3 mb-3">*/}
-                                            {/*<label htmlFor="duration">Noclegów:</label>*/}
-                                            {/*<input type="number" className="form-control" id="duration" placeholder="2 noclegi" min="1" max="3" required*/}
-                                                {/*onChange={this.handleChange}*/}
-                                                {/*value={this.state.form.duration}*/}
-                                            {/*/>*/}
-                                            {/*<div className="invalid-feedback">*/}
-                                                {/*Podaj poprawną ilość noclegów*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="row">*/}
-                                        {/*<div className="col-md-12 mb-3">*/}
-                                            {/*<label htmlFor="comment">Uwagi</label>*/}
-                                            {/*<textarea placeholder="np. Czy jest dostępny garaż?" className="form-control" id="comment"*/}
-                                                      {/*onChange={this.handleChange}*/}
-                                                      {/*value={this.state.form.comment}*/}
-                                            {/*/>*/}
-                                        {/*</div>*/}
+                                        <div className="col-md-4 mb-3">
+                                            <label htmlFor="lastName">Nazwisko:</label>
+                                            <input type="text" className="form-control" id="lastName" placeholder="" required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.lastName}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Wpisz poprawne nazwisko.
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4 mb-3">
+                                            <label htmlFor="email">Email:</label>
+                                            <input type="email" className="form-control" id="email" placeholder="" required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.email}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Wpisz poprawny adres email.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-2 mb-2">
+                                            <label htmlFor="persons">Osób:</label>
+                                            <input type="number" className="form-control" id="persons" placeholder="2 os." min="1" max="3" required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.persons}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Podaj poprawną ilość osób
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4 mb-4">
+                                            <label htmlFor="checkinDate">Zameldowanie</label>
+                                            <input type="date" className="form-control" id="checkinDate" min={today.toISOString().substring(0,10)} required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.checkinDate}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Wpisz poprawną datę.
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3 mb-3">
+                                            <label htmlFor="checkinTime">Godzina</label>
+                                            <input type="time" className="form-control" id="checkinTime" required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.checkinTime}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Wpisz poprawną godzinę.
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3 mb-3">
+                                            <label htmlFor="duration">Noclegów:</label>
+                                            <input type="number" className="form-control" id="duration" placeholder="2 noclegi" min="1" max="3" required
+                                                onChange={this.handleChange}
+                                                value={this.state.form.duration}
+                                            />
+                                            <div className="invalid-feedback">
+                                                Podaj poprawną ilość noclegów
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-12 mb-3">
+                                            <label htmlFor="comment">Uwagi</label>
+                                            <textarea placeholder="np. Czy jest dostępny garaż?" className="form-control" id="comment"
+                                                      onChange={this.handleChange}
+                                                      value={this.state.form.comment}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

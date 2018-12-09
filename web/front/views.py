@@ -22,12 +22,12 @@ def book(request, id):
 
 
 def reservation(request, reservation_id):
-    try:
-        status = request.GET['status'] == '1'
-    except KeyError:
-        status = False
-
-    return render(request, 'reservation.html', {'reservation_id': reservation_id, 'status': status})
+    return render(request, 'index.html')
+    # try:
+    #     status = request.GET['status'] == '1'
+    # except KeyError:
+    #     status = False
+    # return render(request, 'reservation.html', {'reservation_id': reservation_id, 'status': status})
 
 
 def login(request):

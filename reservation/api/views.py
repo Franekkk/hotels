@@ -80,20 +80,28 @@ def book(request, id):
     # potem jak user będzie odpytywać status rezerwacji, to service "reservation" bedzie pytal tego hotelu czy juz ogarnął rezerwację,
     # , a jezeli reservation service nie bedzie wiedzial ktory hotel odpytac, to przeleci po wszystkich i sobie zapisze
 
-
-    return JsonResponse({'received data': request.data})
-    # return JsonResponse({
-    #     "status": "success",
-    #     "roomId": id,
-    #     "reservationId": "gI46AdIM1gEaLY"
-    # })
+    reservation_ = {
+        'id': "gI46AdIM1gEaLY",
+        'roomId': id,
+        'persons': request.data['persons'],
+        'checkinDate': request.data['checkinDate'],
+        'checkinTime': request.data['checkinTime'],
+        'comment': request.data['comment'],
+        'duration': request.data['duration'],
+        'email': request.data['email'],
+        'firstName': request.data['firstName'],
+        'lastName': request.data['lastName'],
+        'status': False
+    }
+    # return JsonResponse({'received data': request.data})
+    return JsonResponse(reservation_)
 
 
 def reservation(request, id):
     return JsonResponse({
         "id": id,
         "room": {
-            "id": id,
+            "id": 5,
             "name": "Jakiś pokój trzyosobowy",
             "hotel": {
                 "id": 4,
@@ -102,7 +110,8 @@ def reservation(request, id):
             },
             "price": 123,
             "capacity": 3,
-            "availability": "2018-12-10"
+            "availability": "2018-12-10",
+            "photo": "/static/img/room3.jpg"
         },
         "firstName": "Piotr",
         "lastName": "Rozmarynowski",
