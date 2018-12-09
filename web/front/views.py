@@ -1,12 +1,24 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+# from rest_framework.decorators import action
+
+
+def index(request):
+    return render(request, "index.html")
 
 
 def rooms(request):
-    return render(request, 'rooms.html')
+    return render(request, 'index.html')
 
 
-def book(request, room_id):
-    return render(request, 'book.html', {'room_id': room_id})
+def room(request, id):
+    return render(request, 'index.html')
+
+
+@csrf_exempt
+# @action(methods=['post'])
+def book(request, id):
+    return render(request, 'index.html')
 
 
 def reservation(request, reservation_id):
