@@ -19,7 +19,7 @@ class m181211_175358_create_room_table extends Migration
             'price'        => $this->integer()->notNull(),
             'capacity'     => $this->smallInteger()->notNull(),
             'photo'        => $this->string(),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
         $this->addPrimaryKey('room-id', 'room', 'id');
         $this->addForeignKey('FK_room-hotel', 'room', 'hotel_id', 'hotel', 'id');

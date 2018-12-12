@@ -26,7 +26,7 @@ class m181211_175649_create_reservation_table extends Migration
             'email'        => $this->string()->notNull(),
             'comment'      => $this->string(),
             'status'       => $this->smallInteger()->notNull(),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
 
         $this->addPrimaryKey('reservation-id', 'reservation', 'id');
         $this->addForeignKey('FK_reservation-room', 'reservation', 'room_id', 'room', 'id');

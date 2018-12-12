@@ -16,7 +16,7 @@ class m181211_175243_create_hotel_table extends Migration
             'id' => $this->string()->notNull()->unique(),
             'name' => $this->string()->notNull(),
             'city' => $this->string()->notNull()
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
         $this->addPrimaryKey('hotel-id', 'hotel', 'id');
 
         $this->insert('hotel', [
