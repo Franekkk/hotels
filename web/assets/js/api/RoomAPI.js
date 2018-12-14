@@ -2,19 +2,19 @@ import React from 'react';
 
 export default class RoomAPI {
     static domain() {
-        return 'http://localhost:8101'
+        return 'http://localhost:8101/room'
     }
 
     static roomListUrl() {
-        return `${this.domain()}/api/`
+        return `${this.domain()}/index`
     }
 
     static roomUrl(roomId) {
-        return `${this.domain()}/api/room/${roomId}`
+        return `${this.domain()}/${roomId}`
     }
 
     static bookUrl(roomId) {
-        return `${this.domain()}/api/room/${roomId}/book`
+        return `${this.domain()}/${roomId}/book`
     }
 
     static get(id) {

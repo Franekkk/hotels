@@ -19,7 +19,7 @@ export default class List extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        rooms: result.rooms
+                        rooms: result
                     });
                 },
                 // Note: it's important to handle errors here

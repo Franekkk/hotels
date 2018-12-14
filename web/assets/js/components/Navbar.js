@@ -6,22 +6,22 @@ export default class Navbar extends React.Component {
     state = {
         loggedUser: null,
     };
-
-    componentDidMount() {
-        fetch(`${RoomAPI.domain()}/api/users/me`, {
-            headers: new Headers({'Content-Type': 'application/json'}),
-        })
-            .then(res => res.json())
-            .then(
-                (user) => ({
-                    loggedUser: user,
-                }),
-                () => ({
-                    loggedUser: null
-                })
-            )
-            .then((newState) => this.setState(newState))
-    }
+    //
+    // componentDidMount() {
+    //     fetch(`${RoomAPI.domain()}/api/users/me`, {
+    //         headers: new Headers({'Content-Type': 'application/json'}),
+    //     })
+    //         .then(res => res.json())
+    //         .then(
+    //             (user) => ({
+    //                 loggedUser: user,
+    //             }),
+    //             () => ({
+    //                 loggedUser: null
+    //             })
+    //         )
+    //         .then((newState) => this.setState(newState))
+    // }
 
     render() {
         return (

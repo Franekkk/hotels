@@ -19,25 +19,27 @@ services:
     volumes:
     - ./web:/srv/app
     depends_on:
-    - reservation
+    - agent
     networks:
     - hotel
-  reservation:
-    build: docker/python
-    image: hotel/python
-    ports:
-    - ${RESERVATION_PORT}:8080
-    volumes:
-    - ./reservation:/srv/app
+  agent:
+    build: docker/php
+    container_name: hotels-agent
+    working_dir: /agent
     environment:
-    - DATABASE_HOST=${DB_HOST}
-    - DATABASE_NAME=${DB_NAME}
-    - DATABASE_USER=${DB_USER}
-    - DATABASE_PASSWORD=${DB_PASSWORD}
-    - DATABASE_NAME_KRAKOW=hotel_krakow
+      - DB_HOST=db
+      - DB_NAME_MAIN=main
+      - DB_USER=root
+      - DB_PASSWORD=${DB_PASSWORD}
+      - HOTELS_NODES=krakow:${HOTEL_KRAKOW_PORT}|wroclaw:${HOTEL_WROCLAW_PORT}|gdansk:${HOTEL_GDANSK_PORT}
+    volumes:
+      - ./agent:/agent
+      - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     depends_on:
     - queue
-    - hotel
+    - hotel_krakow
+    - hotel_wroclaw
+    - hotel_gdansk
     - db
     networks:
     - hotel
@@ -50,7 +52,9 @@ services:
     - ./worker:/srv/app
     depends_on:
     - queue
-    - hotel
+    - hotel_krakow
+    - hotel_wroclaw
+    - hotel_gdansk
     networks:
     - hotel
   queue:
@@ -63,22 +67,11 @@ services:
     - RABBITMQ_DEFAULT_PASS=${QUEUE_PASS}
     networks:
     - hotel
-  hotel:
-    build: docker/python
-    image: hotel/python
-    ports:
-    - ${HOTEL_PORT}:8080
-    volumes:
-    - ./hotel:/srv/app
-    environment:
-    - DATABASE_HOST=${DB_HOST}
-    - DATABASE_NAME=hotel_krakow
-    - DATABASE_USER=root
-    - DATABASE_PASSWORD=${DB_PASSWORD}
-    depends_on:
-    - db
+  redis:
+    image: redis:alpine
+    container_name: hotels-redis
     networks:
-    - hotel
+      - hotel
   db:
     image: mysql:5.7.23
     container_name: hotels-db
@@ -86,7 +79,7 @@ services:
       - ${DB_PORT}:3306
     volumes:
     - hotel_db_data:/var/lib/mysql
-    - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     networks:
@@ -95,12 +88,14 @@ services:
     image: nginx:alpine
     container_name: hotels-nginx
     volumes:
-      - ./hotel_php:/hotel
+      - ./hotel:/hotel
+      - ./agent:/agent
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - ${HOTEL_KRAKOW_PORT}:8201
       - ${HOTEL_WROCLAW_PORT}:8202
       - ${HOTEL_GDANSK_PORT}:8203
+      - ${AGENT_PORT}:8101
     networks:
       - hotel
   hotel_krakow:
@@ -112,10 +107,12 @@ services:
     env_file:
       - ./hotel_krakow.env
     volumes:
-      - ./hotel_php:/hotel
+      - ./hotel:/hotel
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    depends_on:
+      - db
     networks:
-    - hotel
+      - hotel
   hotel_wroclaw:
     build: docker/php
     container_name: hotels-hotel_wroclaw
@@ -125,7 +122,7 @@ services:
     env_file:
       - ./hotel_wroclaw.env
     volumes:
-      - ./hotel_php:/hotel
+      - ./hotel:/hotel
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     networks:
     - hotel
@@ -138,13 +135,8 @@ services:
     env_file:
       - ./hotel_gdansk.env
     volumes:
-      - ./hotel_php:/hotel
+      - ./hotel:/hotel
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-    networks:
-    - hotel
-  redis:
-    image: redis:alpine
-    container_name: hotels-redis
     networks:
     - hotel
 networks:
