@@ -61,42 +61,16 @@ class RoomController extends \yii\rest\ActiveController
                return Room::findOne($id);
             }, "db_{$hotel['name']}");
             if ($room) {
-                $this->proxyRequest($hotel['port']);
+                return json_decode($this->proxyRequest($hotel['port']), true);
             }
         }
     }
 
     public function actionIndex()
     {
-        $hotelsNodes = \Yii::$app->params['hotelsNodes'];
-
-        $findRooms = function($db) {
-            $filter = new ActiveDataFilter([
-                'searchModel' => RoomSearch::class
-            ]);
-
-            $filterCondition = null;
-
-            if ($filter->load(\Yii::$app->request->get())) {
-                $filterCondition = $filter->build();
-                if ($filterCondition === false) {
-                    return new ArrayDataProvider([]);
-                }
-            }
-
-            $query = Room::find()->with('hotel');
-            if ($filterCondition !== null) {
-                $query->andWhere($filterCondition);
-            }
-            return (new ActiveDataProvider([
-                'query' => $query,
-                'db' => $db
-            ]));
-        };
-
-        $allRooms = array_map(function($hotel) use ($findRooms) {
-            return $this->inSpecificDb($findRooms, "db_{$hotel['name']}")->getModels();
-        }, $hotelsNodes);
+        $allRooms = array_map(function($hotel) {
+            return json_decode($this->proxyRequest($hotel['port']), true);
+        }, \Yii::$app->params['hotelsNodes']);
 
         return new ArrayDataProvider(['allModels' => array_merge(...array_values($allRooms))]);
     }
@@ -104,23 +78,23 @@ class RoomController extends \yii\rest\ActiveController
     private function inSpecificDb($do, $dbHotel)
     {
         \Yii::$app->set('db', \Yii::$app->$dbHotel);
-        return $do(\Yii::$app->$dbHotel);
+        $x = $do(\Yii::$app->$dbHotel);
         \Yii::$app->set('db', \Yii::$app->db_main);
         return $x;
     }
 
-    private function proxyRequest($nodePort)
+    private function proxyRequest($nodePort): string
     {
         $r = \Yii::$app->request;
-        $this->httpCallStream(
+        return $this->httpCallStream(
             $r->method,
-            "/{$r->pathInfo}{$r->queryString}",
+            "/{$r->pathInfo}?{$r->queryString}",
             $r->hostName,
             "nginx:$nodePort"
         );
     }
 
-    protected function httpCallStream(string $method, string $query, string $host, string $domain, array $extraOptions = []): void
+    protected function httpCallStream(string $method, string $query, string $host, string $domain, array $extraOptions = []): string
     {
         $header  = implode("\r\n", [
             'X-Requested-With: XMLHttpRequest',
@@ -131,6 +105,7 @@ class RoomController extends \yii\rest\ActiveController
             'header' => $header,
         ]], $extraOptions);
         $context = stream_context_create($opts);
-        readfile("http://$domain$query", false, $context);
+        $content = file_get_contents("http://$domain$query", false, $context);
+        return $content;
     }
 }
