@@ -14,7 +14,7 @@ export default class RoomAPI {
     }
 
     static bookUrl(roomId) {
-        return `${this.domain()}/${roomId}/book`
+        return `${this.domain()}/book/${roomId}`
     }
 
     static get(id) {

@@ -30,8 +30,8 @@ class RoomAvailability
     {
         $isAvailable = self::isAvailableForPeriod(
             $this->room->id,
-            $this->params->checkinDate,
-            $this->params->duration
+            $this->params->checkin_date,
+            (int) $this->params->duration
         );
         if (!$isAvailable) {
             $this->error = "Pokój w podanym okresie jest zajęty.";
@@ -56,5 +56,10 @@ class RoomAvailability
             ->andWhere($orDates);
 
         return !$reservation->exists();
+    }
+
+    public static function closestAvailability(string $roomId, string $checkinDate, int $duration)
+    {
+
     }
 }

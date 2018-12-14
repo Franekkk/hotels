@@ -4,10 +4,13 @@ namespace frontend\controllers;
 
 use common\models\Room;
 use common\models\RoomSearch;
+use frontend\domain\BookARoom;
+use frontend\domain\BookARoom\Params;
+use thamtech\uuid\helpers\UuidHelper;
+use Yii;
 use yii\data\ActiveDataFilter;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use yii\web\Controller;
 
 class RoomController extends \yii\rest\ActiveController
 //class RoomController extends Controller
@@ -46,7 +49,7 @@ class RoomController extends \yii\rest\ActiveController
                 'cors'  => [
                     // restrict access to domains:
                     'Origin'                           => static::allowedDomains(),
-                    'Access-Control-Request-Method'    => ['POST', 'GET'],
+                    'Access-Control-Request-Method'    => ['*'],
                     'Access-Control-Allow-Credentials' => true,
                     'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
                 ],
@@ -54,7 +57,7 @@ class RoomController extends \yii\rest\ActiveController
         ]);
     }
 
-    public function actionView($id)
+    public function actionView(string $id)
     {
         return Room::findOne($id);
     }
@@ -82,5 +85,27 @@ class RoomController extends \yii\rest\ActiveController
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    public function actionBook(string $id)
+    {
+        $params = Yii::$app->request->post();
+        $params['reservation_id'] = UuidHelper::uuid();
+        $params['room_id'] = $id;
+
+        $booking = new BookARoom(new Params($params));
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $reservation = $booking->handle();
+            if ($reservation) {
+                $transaction->commit();
+                return $reservation;
+            }
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+//        Yii::$app->getResponse()->setStatusCode(400);
+        return $booking->errors;
     }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 import RoomAPI from "../../api/RoomAPI";
 
 export default class List extends React.Component {
@@ -43,7 +42,7 @@ export default class List extends React.Component {
         } else {
             const availabeFrom = (date) => {
                 const date_ = new Date(`${date}Z`);
-                date_.getTime() > new Date().getTime()
+                return date_.getTime() > new Date().getTime()
                     ? date_.toLocaleDateString('pl-PL')
                     : 'zaraz'
             }

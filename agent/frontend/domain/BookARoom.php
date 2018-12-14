@@ -49,7 +49,7 @@ class BookARoom extends Model
 
     private function findRoom(): ?Room
     {
-        return Room::findOne($this->params->roomId);
+        return Room::findOne($this->params->room_id);
     }
 
     private function checkIfCapacityFits(Room $room): bool
@@ -67,7 +67,7 @@ class BookARoom extends Model
         if ($availability->isAvailable()) {
             return true;
         }
-        $this->addError('reservation', $availability->error());
+        $this->addError('checkin_date', $availability->error());
         return false;
     }
 

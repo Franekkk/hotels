@@ -47,7 +47,7 @@ export default class Reservation extends React.Component {
                     if (response.ok) {
                         return response.json()
                     }
-                    throw Error(response.statusText);
+                    throw Error(response.status_text);
                 })
                 .then((result) => ({
                     isLoaded: true,
@@ -100,24 +100,34 @@ export default class Reservation extends React.Component {
                             </div>
                             <div className="col-md-3">
                                 <h5>Rezerwacja na</h5>
-                                {reservation.firstName} {reservation.lastName}<br/>
+                                {reservation.first_name} {reservation.last_name}<br/>
                                 {reservation.email}<br/>
                                 Liczba osób: {reservation.persons}<br/>
-                                Zameldowanie: {reservation.checkinDate} {reservation.checkinTime}<br/>
+                                Zameldowanie: {reservation.checkin_date} {reservation.checkin_dime}<br/>
                                 Noclegów: {reservation.duration}<br/>
                                 Uwagi: {reservation.comment}<br/>
                             </div>
                             <div className="col-md-3 text-center">
                                 <h5>Status rezerwacji</h5>
-                                {!reservation.status ? (
+                                {reservation.status == ReservationAPI.Status.NEW ? (
                                     <div>
                                         <i className="fa fa-sync-alt fa-spin fa-8x text-primary"></i><br/><br/>
                                         Oczekuje na weryfikację<br/>
                                     </div>
-                                ) : (
+                                ) : reservation.status == ReservationAPI.Status.ACCEPTED ?(
                                     <div>
-                                        <i className="fa fa-10x fa-check text-success"></i>
+                                        <i className="fa fa-10x fa-check text-success"></i><br/><br/>
                                         Zatwierdzona<br/>
+                                    </div>
+                                ) : reservation.status == ReservationAPI.Status.DECLINED ?(
+                                    <div>
+                                        <i className="fa fa-10x fa-ban danger"></i><br/><br/>
+                                        Odrzucona<br/>
+                                    </div>
+                                ): (
+                                    <div>
+                                        <i className="fa fa-10x fa-hand-paper text-warning"></i><br/><br/>
+                                        Anulowana<br/>
                                     </div>
                                 )}
                             </div>

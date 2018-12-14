@@ -28,28 +28,40 @@ class BookARoom extends Model
         $this->params = $params;
     }
 
-    public function handle(): ?Reservation
+    public function validateReservation(): ?Reservation
     {
         if (
             $this->params->validate()
             AND $wantedRoom = $this->findRoom()
             AND $this->checkIfCapacityFits($wantedRoom)
             AND $this->checkAvailability($wantedRoom)
+            AND $reservation = $this->prepareReservation($wantedRoom)
+            AND $reservation->validate()
         ) {
-            $reservation = $this->prepareReservation($wantedRoom);
-            if ($reservation->save()) {
-                return $reservation;
-            }
-            $this->addErrors($reservation->errors);
+            return $reservation;
         }
-        $this->addErrors($this->params->errors);
+        $this->addErrors(array_merge(
+            $reservation->errors ?? [],
+            $this->params->errors)
+        );
 
+        return null;
+    }
+
+    public function handle(): ?Reservation
+    {
+        if (
+            $reservation = $this->validateReservation()
+            AND $reservation->save()
+        ) {
+            return $reservation;
+        }
         return null;
     }
 
     private function findRoom(): ?Room
     {
-        return Room::findOne($this->params->roomId);
+        return Room::findOne($this->params->room_id);
     }
 
     private function checkIfCapacityFits(Room $room): bool
@@ -57,7 +69,7 @@ class BookARoom extends Model
         $result = $room->capacity >= $this->params->persons;
         if ($result) return $result;
 
-        $this->addError('reservation', 'Ilość osób przekracza pojemność pokoju');
+        $this->addError('persons', 'Ilość osób przekracza pojemność pokoju');
         return false;
     }
 
@@ -67,7 +79,7 @@ class BookARoom extends Model
         if ($availability->isAvailable()) {
             return true;
         }
-        $this->addError('reservation', $availability->error());
+        $this->addError('checkin_date', $availability->error());
         return false;
     }
 

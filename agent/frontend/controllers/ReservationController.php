@@ -2,15 +2,10 @@
 
 namespace frontend\controllers;
 
-use frontend\domain\BookARoom;
-use frontend\domain\BookARoom\Params;
-use frontend\models\Reservation;
-use Yii;
-use yii\helpers\Url;
+use common\models\Reservation;
 use yii\web\NotFoundHttpException;
-use yii\web\ServerErrorHttpException;
 
-class ReservationController extends \yii\rest\ActiveController
+class ReservationController extends ProxyController
 {
     public $modelClass = Reservation::class;
 
@@ -19,6 +14,7 @@ class ReservationController extends \yii\rest\ActiveController
         $actions = parent::actions();
         unset(
             $actions['index'],
+            $actions['view'],
             $actions['create'],
             $actions['update'],
             $actions['delete']
@@ -30,13 +26,17 @@ class ReservationController extends \yii\rest\ActiveController
     /**
      * @throws NotFoundHttpException
      */
+    public function actionView($id)
+    {
+        return json_decode($this->proxyRequest($this->hotelPortFromReservationId($id)), true);
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
     public function actionStatus($id)
     {
-        if (!$reservation = Reservation::findOne($id)) {
-            throw new NotFoundHttpException("Nie znaleziono rezerwacji $id");
-        }
-
-        return ['status' => $reservation->status];
+        return json_decode($this->proxyRequest($this->hotelPortFromReservationId($id)), true);
     }
 
     /**
@@ -44,30 +44,22 @@ class ReservationController extends \yii\rest\ActiveController
      */
     public function actionCancel($id)
     {
-        if (!$reservation = Reservation::findOne($id)) {
-            throw new NotFoundHttpException("Nie znaleziono rezerwacji $id");
-        }
-        $reservation->status = Reservation::STATUS_CANCELED;
-        $reservation->save();
-
-        return $reservation;
+        return json_decode($this->proxyRequest($this->hotelPortFromReservationId($id)), true);
     }
 
-    public function actionCreate()
+    /**
+     * @throws NotFoundHttpException
+     */
+    public function actionValidate($id)
     {
-        $booking = new BookARoom(new Params(Yii::$app->getRequest()->getBodyParams()));
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $reservation = $booking->handle();
-            if ($reservation) {
-                $transaction->commit();
-                return $reservation;
-            }
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        }
-        Yii::$app->getResponse()->setStatusCode(400);
-        return $booking->errors;
+        return json_decode($this->proxyRequest($this->hotelPortFromReservationId($id)), true);
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function hotelPortFromReservationId(string $id): int
+    {
+        return $this->hotelPortFromModelId(Reservation::class, $id);
     }
 }

@@ -6,9 +6,7 @@ use frontend\domain\BookARoom;
 use frontend\domain\BookARoom\Params;
 use frontend\models\Reservation;
 use Yii;
-use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
-use yii\web\ServerErrorHttpException;
 
 class ReservationController extends \yii\rest\ActiveController
 {
@@ -53,20 +51,11 @@ class ReservationController extends \yii\rest\ActiveController
         return $reservation;
     }
 
-    public function actionCreate()
+    public function actionValidate()
     {
         $booking = new BookARoom(new Params(Yii::$app->getRequest()->getBodyParams()));
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $reservation = $booking->handle();
-            if ($reservation) {
-                $transaction->commit();
-                return $reservation;
-            }
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        }
+        return (bool) $booking->validateReservation();
+
         Yii::$app->getResponse()->setStatusCode(400);
         return $booking->errors;
     }

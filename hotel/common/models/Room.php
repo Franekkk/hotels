@@ -4,7 +4,6 @@ namespace common\models;
 
 use Ramsey\Uuid\UuidInterface;
 use thamtech\uuid\validators\UuidValidator;
-use Yii;
 
 /**
  * This is the model class for table "room".
@@ -89,7 +88,12 @@ class Room extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['hotel']);
+        return array_merge(parent::fields(), [
+            'hotel',
+            'availability' => function ($model) {
+                return "2018-12-14";
+            }
+        ]);
     }
 
     /**

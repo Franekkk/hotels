@@ -101,6 +101,11 @@ class Reservation extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['room']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

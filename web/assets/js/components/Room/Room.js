@@ -1,6 +1,5 @@
 import React from 'react';
 import RoomAPI from "../../api/RoomAPI";
-import ReservationAPI from "../../api/ReservationAPI";
 import update from 'immutability-helper';
 
 export default class Room extends React.Component {
@@ -15,12 +14,12 @@ export default class Room extends React.Component {
             isLoaded: false,
             room: null,
             form: {
-                firstName: null,
-                lastName: null,
+                first_name: null,
+                last_name: null,
                 email: null,
                 persons: null,
-                checkinDate: null,
-                checkinTime: null,
+                checkin_date: null,
+                checkin_time: null,
                 duration: null,
                 comment: null,
             }
@@ -50,6 +49,10 @@ export default class Room extends React.Component {
         let prop = {};
         prop[event.target.id] = event.target.value
 
+        if (event.target.id == "checkin_time") {
+            prop[event.target.id] += ":00";
+        }
+
         this.setState((state) => update(state, {
             form: {$merge: prop}
         }));
@@ -58,12 +61,16 @@ export default class Room extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const data = this.state.form;
+        // const data = this.state.form;
+        var data = new FormData();
+        data.append( "json", JSON.stringify( this.state.form ) );
         console.log(data)
         fetch(RoomAPI.bookUrl(this.props.match.params.id), {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(data),
+            // headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: data,
+            // headers: {'Content-Type':'application/json'},
+            // body: JSON.stringify(data),
         })
         .then(response => response.json())
         .then(result => {
@@ -115,20 +122,20 @@ export default class Room extends React.Component {
                                 <div className="col-md-6">
                                     <div className="row">
                                         <div className="col-md-4 mb-3">
-                                            <label htmlFor="firstName">Imię:</label>
-                                            <input type="text" className="form-control" id="firstName" placeholder="" required
+                                            <label htmlFor="first_name">Imię:</label>
+                                            <input type="text" className="form-control" id="first_name" placeholder="" required
                                                 onChange={this.handleChange}
-                                                value={this.state.form.firstName}
+                                                value={this.state.form.first_name}
                                             />
                                             <div className="invalid-feedback">
                                                 Wpisz poprawne imię.
                                             </div>
                                         </div>
                                         <div className="col-md-4 mb-3">
-                                            <label htmlFor="lastName">Nazwisko:</label>
-                                            <input type="text" className="form-control" id="lastName" placeholder="" required
+                                            <label htmlFor="last_name">Nazwisko:</label>
+                                            <input type="text" className="form-control" id="last_name" placeholder="" required
                                                 onChange={this.handleChange}
-                                                value={this.state.form.lastName}
+                                                value={this.state.form.last_name}
                                             />
                                             <div className="invalid-feedback">
                                                 Wpisz poprawne nazwisko.
@@ -157,20 +164,20 @@ export default class Room extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col-md-4 mb-4">
-                                            <label htmlFor="checkinDate">Zameldowanie</label>
-                                            <input type="date" className="form-control" id="checkinDate" min={today.toISOString().substring(0,10)} required
+                                            <label htmlFor="checkin_date">Zameldowanie</label>
+                                            <input type="date" className="form-control" id="checkin_date" min={today.toISOString().substring(0,10)} required
                                                 onChange={this.handleChange}
-                                                value={this.state.form.checkinDate}
+                                                value={this.state.form.checkin_date}
                                             />
                                             <div className="invalid-feedback">
                                                 Wpisz poprawną datę.
                                             </div>
                                         </div>
                                         <div className="col-md-3 mb-3">
-                                            <label htmlFor="checkinTime">Godzina</label>
-                                            <input type="time" className="form-control" id="checkinTime" required
+                                            <label htmlFor="checkin_time">Godzina</label>
+                                            <input type="time" className="form-control" id="checkin_time" required
                                                 onChange={this.handleChange}
-                                                value={this.state.form.checkinTime}
+                                                value={this.state.form.checkin_time}
                                             />
                                             <div className="invalid-feedback">
                                                 Wpisz poprawną godzinę.

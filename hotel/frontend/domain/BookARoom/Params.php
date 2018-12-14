@@ -15,39 +15,39 @@ use yii\base\Model;
 class Params extends Model
 {
     /** @var UuidInterface|string */
-    public $reservationId;
+    public $reservation_id;
     /** @var UuidInterface|string */
-    public $roomId;
+    public $room_id;
     /** @var int */
     public $persons;
     /** @var string */
-    public $checkinDate;
+    public $checkin_date;
     /** @var string */
-    public $checkinTime;
+    public $checkin_time;
     /** @var int */
     public $duration;
     /** @var string */
-    public $firstName;
+    public $first_name;
     /** @var string */
-    public $lastName;
+    public $last_name;
     /** @var string */
     public $email;
     /** @var string */
     public $comment;
 
-    public function __construct(array $requestBodyParams)
+    public function __construct(array $params)
     {
         parent::__construct();
-        $this->load($requestBodyParams, '');
+        $this->load($params, '');
     }
 
     public function rules()
     {
         return [
-            [['reservationId', 'roomId'], UuidValidator::class],
-            [['reservationId', 'roomId', 'persons', 'duration', 'checkinDate', 'checkinTime', 'firstName', 'lastName', 'email'], 'required'],
+            [['reservation_id', 'room_id'], UuidValidator::class],
+            [['reservation_id', 'room_id', 'persons', 'duration', 'checkin_date', 'checkin_time', 'first_name', 'last_name', 'email'], 'required'],
             [['persons', 'duration'], 'integer'],
-            [['checkinDate', 'checkinTime', 'firstName', 'lastName', 'comment'], 'string'],
+            [['checkin_date', 'checkin_time', 'first_name', 'last_name', 'comment'], 'string'],
             ['email','email']
         ];
     }
