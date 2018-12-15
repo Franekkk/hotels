@@ -90,6 +90,8 @@ class RoomController extends \yii\rest\ActiveController
     public function actionBook(string $id)
     {
         $params = Yii::$app->request->post();
+//        $params    = reset($params);
+//        $params    = json_decode($params, true);
         $params['reservation_id'] = UuidHelper::uuid();
         $params['room_id'] = $id;
 
@@ -103,9 +105,9 @@ class RoomController extends \yii\rest\ActiveController
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
-            throw $e;
+            $booking->addError('reservation', "Ekhem, prawie zadziałało: {$e->getMessage()}");
         }
-//        Yii::$app->getResponse()->setStatusCode(400);
+//        Yii::$app->getResponse()->setStatusCode(422);
         return $booking->errors;
     }
 }

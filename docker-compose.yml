@@ -32,6 +32,11 @@ services:
       - DB_USER=root
       - DB_PASSWORD=${DB_PASSWORD}
       - HOTELS_NODES=krakow:${HOTEL_KRAKOW_PORT}|wroclaw:${HOTEL_WROCLAW_PORT}|gdansk:${HOTEL_GDANSK_PORT}
+      - NGINX_HOST=nginx
+      - QUEUE_HOST=queue
+      - QUEUE_PORT=5672
+      - QUEUE_USER=${QUEUE_USER}
+      - QUEUE_PASS=${QUEUE_PASS}
     volumes:
       - ./agent:/agent
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini

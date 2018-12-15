@@ -65,14 +65,12 @@ class ProxyController extends \yii\rest\ActiveController
         $r = \Yii::$app->request;
         if ($r->isPost) {
             $contentType = "application/x-www-form-urlencoded";
-            $post     = $r->post();
-            $postData = reset($post);
-            $postData = json_decode($postData, true);
-            $postData = [
-                'header' => [
-                    "Content-Type: $contentType"
-                ],
-                'content' => http_build_query($postData)
+            $post        = $r->post();
+            $postData    = reset($post);
+            $postData    = json_decode($postData, true);
+            $postData    = [
+                'header'  => ["Content-Type: $contentType"],
+                'content' => http_build_query($postData),
             ];
         } else {
             $postData = [];
