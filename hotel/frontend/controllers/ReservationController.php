@@ -51,12 +51,30 @@ class ReservationController extends \yii\rest\ActiveController
         return $reservation;
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateStatus($id, $status)
+    {
+        if ($reservation = Reservation::findOne($id)) {
+            $reservation->status = $status;
+            if ($reservation->save()) {
+                return $reservation;
+            }
+
+            return ['errors' => $reservation->errors];
+        }
+        throw new NotFoundHttpException("Nie znaleziono rezerwacji $id");
+    }
+
     public function actionValidate()
     {
         $booking = new BookARoom(new Params(Yii::$app->getRequest()->getBodyParams()));
-        return (bool) $booking->validateReservation();
+
+        return (bool)$booking->validateReservation();
 
         Yii::$app->getResponse()->setStatusCode(400);
+
         return $booking->errors;
     }
 }

@@ -47,6 +47,7 @@ return [
             'enableStrictParsing' => true,
             'showScriptName'      => false,
             'rules'               => [
+                "reservation/<id:$uuidPattern>/update-status/<status:[0-3]>" => 'reservation/update-status',
                 "<controller:\\w+>/<id:$uuidPattern>"               => '<controller>/view',
                 "<controller:\\w+>/<action:\\w+>/<id:$uuidPattern>" => '<controller>/<action>',
                 '<controller>/<action>'                             => '<controller>/<action>',

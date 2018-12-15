@@ -49,19 +49,32 @@ services:
     networks:
     - hotel
   worker:
-    build: docker/python
-    image: hotel/python
-    ports:
-    - ${WORKER_PORT}:8080
+    build: docker/php
+    container_name: hotels-worker
+    working_dir: /worker
+    command: "./yii reservation-handler"
+    environment:
+      - DB_HOST=db
+      - DB_NAME_MAIN=main
+      - DB_USER=root
+      - DB_PASSWORD=${DB_PASSWORD}
+      - HOTELS_NODES=krakow:${HOTEL_KRAKOW_PORT}|wroclaw:${HOTEL_WROCLAW_PORT}|gdansk:${HOTEL_GDANSK_PORT}
+      - NGINX_HOST=nginx
+      - QUEUE_HOST=queue
+      - QUEUE_PORT=5672
+      - QUEUE_USER=${QUEUE_USER}
+      - QUEUE_PASS=${QUEUE_PASS}
     volumes:
-    - ./worker:/srv/app
+      - ./worker:/worker
+      - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     depends_on:
-    - queue
-    - hotel_krakow
-    - hotel_wroclaw
-    - hotel_gdansk
+      - queue
+      - hotel_krakow
+      - hotel_wroclaw
+      - hotel_gdansk
+      - db
     networks:
-    - hotel
+      - hotel
   queue:
     image: rabbitmq:3.7.4-management-alpine
     ports:
