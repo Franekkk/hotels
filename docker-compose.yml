@@ -75,6 +75,7 @@ services:
       - hotel_wroclaw
       - hotel_gdansk
       - db
+    restart: always
     networks:
       - hotel
   queue:

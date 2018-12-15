@@ -12,6 +12,7 @@ use common\models\Reservation;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Yii;
 use yii\console\Controller;
+use yii\console\ExitCode;
 use yii\helpers\Console;
 use yii\web\NotFoundHttpException;
 
@@ -19,9 +20,14 @@ class ReservationHandlerController extends Controller
 {
     public function actionIndex()
     {
-        $this->onIncomingReservations(function (string $reservationId) {
-            $this->handleReservation($reservationId);
-        });
+        try {
+            $this->onIncomingReservations(function (string $reservationId) {
+                $this->handleReservation($reservationId);
+            });
+        } catch (\Exception $e){
+            error_log($e->getMessage());
+            return ExitCode::UNSPECIFIED_ERROR;
+        }
     }
 
     private function onIncomingReservations(\Closure $callback)
