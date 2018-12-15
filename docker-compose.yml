@@ -19,7 +19,8 @@ services:
     volumes:
     - ./web:/srv/app
     depends_on:
-    - agent
+      - nginx
+      - agent
     networks:
     - hotel
   agent:
@@ -45,6 +46,7 @@ services:
     - hotel_krakow
     - hotel_wroclaw
     - hotel_gdansk
+    - worker
     - db
     networks:
     - hotel
@@ -114,6 +116,11 @@ services:
       - ${HOTEL_WROCLAW_PORT}:8202
       - ${HOTEL_GDANSK_PORT}:8203
       - ${AGENT_PORT}:8101
+    depends_on:
+      - agent
+      - hotel_krakow
+      - hotel_wroclaw
+      - hotel_gdansk
     networks:
       - hotel
   hotel_krakow:
@@ -142,6 +149,8 @@ services:
     volumes:
       - ./hotel:/hotel
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    depends_on:
+      - db
     networks:
     - hotel
   hotel_gdansk:
@@ -155,6 +164,8 @@ services:
     volumes:
       - ./hotel:/hotel
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    depends_on:
+      - db
     networks:
     - hotel
 networks:
