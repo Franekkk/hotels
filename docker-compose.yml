@@ -54,7 +54,8 @@ services:
     build: docker/php
     container_name: hotels-worker
     working_dir: /worker
-    command: "./yii reservation-handler"
+#    command: "./yii reservation-handler"
+    command: "php init && composer install && yii reservation-handler"
     environment:
       - DB_HOST=db
       - DB_NAME_MAIN=main
