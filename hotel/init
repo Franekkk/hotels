@@ -26,7 +26,7 @@ if (empty($params['env']) || $params['env'] === '1') {
         echo "  [$i] $name\n";
     }
     echo "\n  Your choice [0-" . (count($envs) - 1) . ', or "q" to quit] ';
-    $answer = trim(fgets(STDIN));
+    $answer = "0";
 
     if (!ctype_digit($answer) || !in_array($answer, range(0, count($envs) - 1))) {
         echo "\n  Quit initialization.\n";
@@ -50,7 +50,7 @@ $env = $envs[$envName];
 
 if (empty($params['env'])) {
     echo "\n  Initialize the application under '{$envNames[$answer]}' environment? [yes|no] ";
-    $answer = trim(fgets(STDIN));
+    $answer = "y";
     if (strncasecmp($answer, 'y', 1)) {
         echo "\n  Quit initialization.\n";
         exit(0);
@@ -118,7 +118,7 @@ function copyFile($root, $source, $target, &$all, $params)
             echo "            ...overwrite? [Yes|No|All|Quit] ";
 
 
-            $answer = !empty($params['overwrite']) ? $params['overwrite'] : trim(fgets(STDIN));
+            $answer = !empty($params['overwrite']) ? $params['overwrite'] : "n";
             if (!strncasecmp($answer, 'q', 1)) {
                 return false;
             } else {
