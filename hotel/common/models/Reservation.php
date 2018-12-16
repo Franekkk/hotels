@@ -74,7 +74,7 @@ class Reservation extends \yii\db\ActiveRecord
             [['checkin_time'], 'time', 'format' => 'HH:mm:ss'],
             [['first_name', 'last_name', 'email', 'comment'], 'string', 'max' => 255],
             [['email'], 'email'],
-            [['room_id'], 'exist', 'skipOnError' => false, 'targetClass' => Room::class, 'targetAttribute' => ['room_id' => 'id']],
+            [['room_id'], 'exist', 'skipOnError' => true, 'targetClass' => Room::class, 'targetAttribute' => ['room_id' => 'id']],
         ];
     }
 
@@ -121,5 +121,20 @@ class Reservation extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ReservationQuery(static::class);
+    }
+
+    public function accept(): void
+    {
+        $this->status = self::STATUS_ACCEPTED;
+    }
+
+    public function decline(): void
+    {
+        $this->status = self::STATUS_DECLINED;
+    }
+
+    public function cancel(): void
+    {
+        $this->status = self::STATUS_CANCELED;
     }
 }

@@ -57,9 +57,4 @@ class RoomAvailability
 
         return !$reservation->exists();
     }
-
-    public static function closestAvailability(string $roomId, string $checkinDate, int $duration)
-    {
-
-    }
 }

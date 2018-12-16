@@ -6,6 +6,8 @@ DROP SCHEMA IF EXISTS `hotel_wroclaw`;
 CREATE DATABASE `hotel_wroclaw` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 DROP SCHEMA IF EXISTS `hotel_gdansk`;
 CREATE DATABASE `hotel_gdansk` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+DROP SCHEMA IF EXISTS `test`;
+CREATE DATABASE `test` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 CREATE USER 'hotel'@'%' IDENTIFIED BY 'hotel';
 GRANT ALL ON *.* TO 'root'@'%';

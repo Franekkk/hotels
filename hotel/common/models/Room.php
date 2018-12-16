@@ -46,7 +46,7 @@ class Room extends \yii\db\ActiveRecord
         return [
             [['id', 'hotel_id'], UuidValidator::class],
             [['name', 'hotel_id', 'price', 'capacity'], 'required'],
-            [['price', 'capacity'], 'integer'],
+            [['price', 'capacity'], 'integer', 'min' => 1],
             [['name', 'photo'], 'string', 'max' => 255],
             [['hotel_id'], 'exist', 'skipOnError' => true, 'targetClass' => Hotel::className(), 'targetAttribute' => ['hotel_id' => 'id']],
         ];

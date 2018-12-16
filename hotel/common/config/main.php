@@ -13,6 +13,9 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'request' => [
+            'cookieValidationKey' => 'test',
+        ],
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => "mysql:host=$db_host;dbname=$db_name",
