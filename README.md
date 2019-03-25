@@ -1,8 +1,8 @@
-# Dokumentacja
+Simple toy project showing communication between several multiple web services.
 
-## Pierwsze uruchomienie
-1. `docker-compose up -d` i poczekać aż zbuduje się wszystko.
-2. `./first-run.sh` zainicjuje zależności na wszystkich serwisach dockerowych które tego potrzebują.
+## First run
+1. `docker-compose up -d` to build all necessary containers.
+2. `./first-run.sh` initializes dependencies on those docker services that need it.
 
-## Testy
+## Tests
 `docker-compose run hotel_krakow bash run_tests.sh`
